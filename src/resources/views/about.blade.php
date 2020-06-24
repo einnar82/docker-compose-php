@@ -1,0 +1,1 @@
+<p>About {{$name}}</p>
