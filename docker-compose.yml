@@ -71,7 +71,7 @@ services:
 
   artisan:
     build:
-      context: .
+      context: ./php
       dockerfile: Dockerfile
     container_name: artisan
     volumes:
