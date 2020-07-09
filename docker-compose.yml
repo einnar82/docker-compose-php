@@ -19,7 +19,9 @@ services:
       - laravel
 
   mysql:
-    image: mysql:5.7.29
+    build:
+      context: ./mysql/image
+      dockerfile: Dockerfile
     container_name: mysql
     restart: unless-stopped
     tty: true
@@ -27,7 +29,7 @@ services:
       - "3306:3306"
     command: "--innodb_use_native_aio=0"
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: homestead
       MYSQL_USER: homestead
@@ -68,6 +70,16 @@ services:
   #     - ./src:/var/www/html
   #   working_dir: /var/www/html
   #   entrypoint: ['npm']
+
+  redis:
+    build: ./redis
+    container_name: redis
+    volumes:
+      - ./redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - laravel
 
   artisan:
     build:
