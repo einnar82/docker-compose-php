@@ -4,7 +4,8 @@ WORKDIR /var/www/html
 
 RUN apk update && \
     apk add \
-    libxml2-dev 
+    libxml2-dev \
+    bash
 
 RUN docker-php-source extract \
     && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/3.0.0.tar.gz \
@@ -26,3 +27,4 @@ RUN docker-php-ext-install \
     pcntl \
     redis \
     soap 
+    
