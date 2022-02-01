@@ -1,10 +1,11 @@
 # Instructions
 
-To start he project, type `docker-compose up -d`.
+To start the project, type `docker-compose up -d`.
 
-Create a project inside the src, 
+To create a project inside the src,
 
-Example (Laravel): 
+Example (Laravel):
+
 `docker-compose run --rm composer create-project --prefer-dist laravel/laravel .`
 
 For Vanilla Projects, just write on the src folder directly.
