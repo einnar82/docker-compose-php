@@ -7,7 +7,8 @@ RUN apk update && \
     .deps \
     $PHPIZE_DEPS \
     libxml2-dev \
-    bash
+    bash \
+    icu-dev
 
 RUN echo "104.236.228.160 pecl.php.net" >> /etc/hosts \
     && pecl install -o -f redis \
