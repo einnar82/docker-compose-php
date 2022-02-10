@@ -32,14 +32,13 @@ services:
       - ./mysql/data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: "${MYSQL_DATABASE:-laravel}"
-      MYSQL_USER: "${MYSQL_USER:-root}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-password}"
       SERVICE_TAGS: "${MYSQL_SERVICE_TAGS:-dev}"
       SERVICE_NAME: "${MYSQL_SERVICE_NAME:-mysql}"
     networks:
       - laravel
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-p${MYSQL_ROOT_PASSWORD}" ]
+      test: [ "CMD", "mysqladmin", "ping", "-p${MYSQL_ROOT_PASSWORD:-password}" ]
       retries: 3
       timeout: 5s
 
