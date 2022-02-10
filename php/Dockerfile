@@ -1,30 +1,33 @@
-FROM php:7.2-fpm-alpine
+FROM php:7.4-fpm-alpine
 
 WORKDIR /var/www/html
 
 RUN apk update && \
-    apk add \
+    apk add --no-cache --virtual  \
+    .deps \
+    $PHPIZE_DEPS \
     libxml2-dev \
     bash
 
-RUN docker-php-source extract \
-    && curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/3.0.0.tar.gz \
-    && tar xfz /tmp/redis.tar.gz \
-    && rm -r /tmp/redis.tar.gz \
-    && mv phpredis-3.0.0 /usr/src/php/ext/redis 
+RUN echo "104.236.228.160 pecl.php.net" >> /etc/hosts \
+    && pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
 
 # Clear cache
 RUN rm -rf /var/cache/apk/*
 
 # Install extensions
-# Make it readable and arrange from A-Z
+# Make it readable and arrange from A-Z except if there are prerequisites
 RUN docker-php-ext-install \
     bcmath \
+    intl \
     exif \
-    mbstring \
+    opcache \
     pdo \
     pdo_mysql \
-    pcntl \
-    redis \
-    soap 
-    
+    tokenizer \
+    xml \
+    pcntl
+
+COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
