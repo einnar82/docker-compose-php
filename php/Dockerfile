@@ -7,6 +7,7 @@ RUN apk update && \
     .deps \
     $PHPIZE_DEPS \
     libxml2-dev \
+    icu-dev \
     bash
 
 RUN echo "104.236.228.160 pecl.php.net" >> /etc/hosts \
